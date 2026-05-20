@@ -482,4 +482,39 @@
       setTheme(isLight ? 'dark' : 'light');
       showToast(`☯️ ${isLight ? 'Dark' : 'Light'} mode activated`);
     });
-    document.querySelectorAll('[
+    document.querySelectorAll('[data-wall]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const wall = btn.getAttribute('data-wall');
+        setWallpaper(wall);
+        showToast(`🎨 wallpaper updated`);
+      });
+    });
+    document.getElementById('addLinkBtn').addEventListener('click', addNewLinkFromPrompt);
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.addEventListener('click', () => {
+        const tab = item.getAttribute('data-tab');
+        currentTab = tab;
+        document.querySelectorAll('.nav-item').forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+        renderCurrentView();
+      });
+    });
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => { searchQuery = e.target.value; renderCurrentView(); });
+    renderCurrentView();
+    // PWA install prompt mock
+    window.addEventListener('beforeinstallprompt', (e) => {
+      e.preventDefault();
+      let installBtn = document.createElement('button');
+      installBtn.innerText = '📲 Install App';
+      installBtn.className = 'icon-btn';
+      installBtn.style.background = '#9b4dff';
+      document.querySelector('.top-header').appendChild(installBtn);
+      installBtn.addEventListener('click', () => { e.prompt(); installBtn.remove(); });
+    });
+  }
+
+  initUI();
+</script>
+</body>
+</html>
