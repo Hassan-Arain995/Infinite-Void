@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Infinite Void</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -17,7 +17,7 @@ font-family:'Poppins',sans-serif;
 }
 
 body{
-background:#07070d;
+background:#050816;
 color:white;
 overflow-x:hidden;
 min-height:100vh;
@@ -28,10 +28,10 @@ content:'';
 position:fixed;
 width:500px;
 height:500px;
-background:purple;
+background:#9333ea;
 filter:blur(180px);
 top:-200px;
-left:-100px;
+left:-150px;
 opacity:.25;
 z-index:-1;
 }
@@ -41,10 +41,10 @@ content:'';
 position:fixed;
 width:500px;
 height:500px;
-background:#3b82f6;
+background:#2563eb;
 filter:blur(180px);
 bottom:-200px;
-right:-100px;
+right:-150px;
 opacity:.20;
 z-index:-1;
 }
@@ -56,13 +56,10 @@ min-height:100vh;
 
 .sidebar{
 width:280px;
-background:rgba(255,255,255,0.05);
+padding:25px;
+background:rgba(255,255,255,0.04);
 backdrop-filter:blur(20px);
 border-right:1px solid rgba(255,255,255,0.08);
-padding:25px;
-display:flex;
-flex-direction:column;
-justify-content:space-between;
 }
 
 .logo{
@@ -73,33 +70,34 @@ margin-bottom:40px;
 }
 
 .logo-box{
-width:50px;
-height:50px;
+width:55px;
+height:55px;
 border-radius:18px;
 background:linear-gradient(135deg,#9333ea,#3b82f6);
 }
 
 .logo h1{
-font-size:28px;
+font-size:30px;
+font-weight:700;
 }
 
 .logo p{
+color:rgba(255,255,255,.6);
 font-size:13px;
-color:rgba(255,255,255,0.6);
 }
 
 .menu{
 display:flex;
 flex-direction:column;
-gap:12px;
+gap:14px;
 }
 
 .menu button{
-background:rgba(255,255,255,0.05);
-border:none;
-color:white;
 padding:16px;
+border:none;
 border-radius:18px;
+background:rgba(255,255,255,0.05);
+color:white;
 cursor:pointer;
 font-size:15px;
 transition:.3s;
@@ -116,7 +114,7 @@ flex:1;
 padding:30px;
 }
 
-.top{
+.header{
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -125,13 +123,13 @@ flex-wrap:wrap;
 margin-bottom:35px;
 }
 
-.top h2{
-font-size:40px;
-margin-bottom:8px;
+.header h2{
+font-size:45px;
+margin-bottom:10px;
 }
 
-.top p{
-color:rgba(255,255,255,0.6);
+.header p{
+color:rgba(255,255,255,.6);
 }
 
 .input-area{
@@ -142,21 +140,21 @@ flex-wrap:wrap;
 
 .input-area input{
 width:350px;
-padding:16px 18px;
+padding:16px;
 border:none;
 outline:none;
 border-radius:18px;
-background:rgba(255,255,255,0.06);
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
 color:white;
 font-size:15px;
-border:1px solid rgba(255,255,255,0.08);
 }
 
 .input-area button{
-padding:16px 25px;
+padding:16px 24px;
 border:none;
 border-radius:18px;
-background:linear-gradient(135deg,#9333ea,#3b82f6);
+background:linear-gradient(135deg,#9333ea,#2563eb);
 color:white;
 font-weight:600;
 cursor:pointer;
@@ -169,21 +167,21 @@ transform:scale(1.05);
 
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
 gap:22px;
 }
 
 .card{
 background:rgba(255,255,255,0.05);
 border:1px solid rgba(255,255,255,0.08);
-padding:22px;
 border-radius:28px;
+padding:22px;
 backdrop-filter:blur(20px);
 transition:.4s;
 }
 
 .card:hover{
-transform:translateY(-6px);
+transform:translateY(-5px);
 border-color:rgba(168,85,247,.5);
 }
 
@@ -205,6 +203,14 @@ justify-content:center;
 font-size:24px;
 }
 
+.favorite{
+background:none;
+border:none;
+font-size:22px;
+cursor:pointer;
+color:gold;
+}
+
 .platform{
 font-size:25px;
 font-weight:600;
@@ -213,7 +219,7 @@ margin-bottom:8px;
 
 .link{
 font-size:13px;
-color:rgba(255,255,255,0.6);
+color:rgba(255,255,255,.6);
 word-break:break-all;
 margin-bottom:20px;
 }
@@ -230,8 +236,9 @@ padding:12px;
 border:none;
 border-radius:14px;
 cursor:pointer;
-transition:.3s;
 color:white;
+transition:.3s;
+min-width:100px;
 }
 
 .open-btn{
@@ -239,11 +246,15 @@ background:rgba(255,255,255,0.08);
 }
 
 .download-btn{
-background:linear-gradient(135deg,#9333ea,#3b82f6);
+background:linear-gradient(135deg,#9333ea,#2563eb);
+}
+
+.copy-btn{
+background:rgba(255,255,255,0.08);
 }
 
 .delete-btn{
-background:rgba(239,68,68,0.2);
+background:rgba(239,68,68,.2);
 }
 
 .actions button:hover{
@@ -253,10 +264,14 @@ transform:scale(1.03);
 .empty{
 padding:60px;
 text-align:center;
-background:rgba(255,255,255,0.05);
 border-radius:28px;
-color:rgba(255,255,255,0.6);
-border:1px dashed rgba(255,255,255,0.1);
+background:rgba(255,255,255,0.04);
+border:1px dashed rgba(255,255,255,0.08);
+color:rgba(255,255,255,.5);
+}
+
+.hidden{
+display:none;
 }
 
 @media(max-width:900px){
@@ -269,8 +284,8 @@ flex-direction:column;
 width:100%;
 }
 
-.top h2{
-font-size:32px;
+.header h2{
+font-size:35px;
 }
 
 .input-area input{
@@ -281,13 +296,12 @@ width:100%;
 
 </style>
 </head>
+
 <body>
 
 <div class="container">
 
 <div class="sidebar">
-
-<div>
 
 <div class="logo">
 <div class="logo-box"></div>
@@ -299,12 +313,16 @@ width:100%;
 </div>
 
 <div class="menu">
-<button>🌌 Social Vault</button>
-<button>🧠 Infinite Tools</button>
-<button>⭐ Favorites</button>
-<button>🎨 Wallpapers</button>
-<button>⚙ Settings</button>
-</div>
+
+<button onclick="showSection('vault')">🌌 Social Vault</button>
+
+<button onclick="showSection('tools')">🧠 Infinite Tools</button>
+
+<button onclick="showFavorites()">⭐ Favorites</button>
+
+<button onclick="changeWallpaper()">🎨 Wallpapers</button>
+
+<button onclick="toggleTheme()">⚙ Toggle Theme</button>
 
 </div>
 
@@ -312,28 +330,26 @@ width:100%;
 
 <div class="main">
 
-<div class="top">
+<div class="header">
 
 <div>
-<h2>Social Media Vault</h2>
-<p>Save, organize, open and download instantly.</p>
+<h2 id="sectionTitle">Social Media Vault</h2>
+<p id="sectionDesc">Save, organize, open and download instantly.</p>
 </div>
 
 <div class="input-area">
+
 <input type="text" id="linkInput" placeholder="Paste social media link...">
 
-<button onclick="addLink()">Add Link</button>
-</div>
+<button onclick="addLink()">
+Add Link
+</button>
 
 </div>
 
-<div class="cards" id="cards">
-
-<div class="empty">
-No links added yet.
 </div>
 
-</div>
+<div class="cards" id="cards"></div>
 
 </div>
 
@@ -345,15 +361,34 @@ let links = JSON.parse(localStorage.getItem('infiniteVoidLinks')) || [];
 
 const cards = document.getElementById('cards');
 
+const wallpapers = [
+'#050816',
+'#12051f',
+'#06111f',
+'#111827',
+'#1e1b4b'
+];
+
+let wallpaperIndex = 0;
+
 const downloaders = {
+
 tiktok:'https://savetik.co/en2',
+
 instagram:'https://fastdl.app/en2#google_vignette',
+
 youtube:'https://y2mate.nu',
+
 facebook:'https://fdown.net/',
+
 pinterest:'https://klickpin.com/',
+
 twitter:'https://ssstwitter.com/',
+
 x:'https://ssstwitter.com/',
+
 capcut:'https://anydownloader.com/en/'
+
 };
 
 function detectPlatform(url){
@@ -361,11 +396,17 @@ function detectPlatform(url){
 url = url.toLowerCase();
 
 if(url.includes('tiktok')) return ['TikTok','🎵'];
+
 if(url.includes('instagram')) return ['Instagram','📸'];
+
 if(url.includes('youtube') || url.includes('youtu.be')) return ['YouTube','▶'];
+
 if(url.includes('facebook')) return ['Facebook','📘'];
+
 if(url.includes('pinterest')) return ['Pinterest','📌'];
+
 if(url.includes('twitter') || url.includes('x.com')) return ['Twitter/X','✖'];
+
 if(url.includes('capcut')) return ['CapCut','🎬'];
 
 return ['Unknown','🌌'];
@@ -373,14 +414,16 @@ return ['Unknown','🌌'];
 }
 
 function saveLinks(){
+
 localStorage.setItem('infiniteVoidLinks',JSON.stringify(links));
+
 }
 
-function renderLinks(){
+function renderLinks(list = links){
 
 cards.innerHTML='';
 
-if(links.length===0){
+if(list.length===0){
 
 cards.innerHTML=`
 <div class="empty">
@@ -392,14 +435,20 @@ return;
 
 }
 
-links.forEach((item,index)=>{
+list.forEach((item,index)=>{
 
 cards.innerHTML += `
 
 <div class="card">
 
 <div class="card-top">
+
 <div class="icon">${item.icon}</div>
+
+<button class="favorite" onclick="toggleFavorite(${item.id})">
+${item.favorite ? '⭐' : '☆'}
+</button>
+
 </div>
 
 <div class="platform">${item.platform}</div>
@@ -412,11 +461,15 @@ cards.innerHTML += `
 Open
 </button>
 
-<button class="download-btn" onclick="openDownloader('${item.platform}')">
+<button class="download-btn" onclick="openDownloader('${item.platform}','${item.url}')">
 Download
 </button>
 
-<button class="delete-btn" onclick="deleteLink(${index})">
+<button class="copy-btn" onclick="copyLink('${item.url}')">
+Copy
+</button>
+
+<button class="delete-btn" onclick="deleteLink(${item.id})">
 Delete
 </button>
 
@@ -436,46 +489,209 @@ const input = document.getElementById('linkInput');
 
 const url = input.value.trim();
 
-if(!url) return;
+if(!url){
+
+alert('Paste a link first.');
+
+return;
+
+}
 
 const data = detectPlatform(url);
 
 links.unshift({
+
+id:Date.now(),
+
 platform:data[0],
+
 icon:data[1],
-url:url
+
+url:url,
+
+favorite:false
+
 });
 
 saveLinks();
+
 renderLinks();
 
 input.value='';
 
 }
 
-function deleteLink(index){
+function deleteLink(id){
 
-links.splice(index,1);
+links = links.filter(link => link.id !== id);
 
 saveLinks();
+
 renderLinks();
 
 }
 
-function openDownloader(platform){
+function toggleFavorite(id){
+
+links = links.map(link => {
+
+if(link.id === id){
+
+return {
+
+...link,
+
+favorite:!link.favorite
+
+};
+
+}
+
+return link;
+
+});
+
+saveLinks();
+
+renderLinks();
+
+}
+
+function showFavorites(){
+
+const favorites = links.filter(link => link.favorite);
+
+document.getElementById('sectionTitle').innerText = 'Favorites';
+
+document.getElementById('sectionDesc').innerText = 'Your favorite saved links.';
+
+renderLinks(favorites);
+
+}
+
+function showSection(type){
+
+if(type === 'vault'){
+
+document.getElementById('sectionTitle').innerText = 'Social Media Vault';
+
+document.getElementById('sectionDesc').innerText = 'Save, organize, open and download instantly.';
+
+renderLinks();
+
+}
+
+if(type === 'tools'){
+
+cards.innerHTML = `
+
+<div class="card">
+<div class="platform">TikTok Downloader</div>
+
+<div class="actions">
+<button class="download-btn" onclick="window.open('https://savetik.co/en2','_blank')">
+Open Tool
+</button>
+</div>
+</div>
+
+<div class="card">
+<div class="platform">Instagram Downloader</div>
+
+<div class="actions">
+<button class="download-btn" onclick="window.open('https://fastdl.app/en2#google_vignette','_blank')">
+Open Tool
+</button>
+</div>
+</div>
+
+<div class="card">
+<div class="platform">YouTube Downloader</div>
+
+<div class="actions">
+<button class="download-btn" onclick="window.open('https://y2mate.nu','_blank')">
+Open Tool
+</button>
+</div>
+</div>
+
+`;
+
+document.getElementById('sectionTitle').innerText = 'Infinite Tools';
+
+document.getElementById('sectionDesc').innerText = 'Quick access downloader tools.';
+
+}
+
+}
+
+function openDownloader(platform,url){
 
 platform = platform.toLowerCase();
 
+navigator.clipboard.writeText(url);
+
 if(platform.includes('twitter')){
+
 window.open(downloaders.twitter,'_blank');
+
+alert('Link copied. Paste it in downloader.');
+
 return;
+
 }
 
 const key = platform.split('/')[0].toLowerCase();
 
 if(downloaders[key]){
+
 window.open(downloaders[key],'_blank');
+
+alert('Link copied. Paste it in downloader.');
+
 }
+
+}
+
+function copyLink(url){
+
+navigator.clipboard.writeText(url);
+
+alert('Link copied.');
+
+}
+
+function toggleTheme(){
+
+document.body.classList.toggle('light');
+
+if(document.body.classList.contains('light')){
+
+document.body.style.background = '#f4f4f4';
+
+document.body.style.color = '#111';
+
+}else{
+
+document.body.style.background = '#050816';
+
+document.body.style.color = 'white';
+
+}
+
+}
+
+function changeWallpaper(){
+
+wallpaperIndex++;
+
+if(wallpaperIndex >= wallpapers.length){
+
+wallpaperIndex = 0;
+
+}
+
+document.body.style.background = wallpapers[wallpaperIndex];
 
 }
 
