@@ -1,703 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infinite Void</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Infinite Void — Premium Social Dashboard</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <meta name="theme-color" content="#0a0a1f">
+  <link rel="manifest" href="data:application/manifest+json,{%22name%22:%22Infinite%20Void%22,%22short_name%22:%22Void%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22background_color%22:%220a0a1f%22,%22theme_color%22:%239b4dff%22,%22icons%22:[{%22src%22:%22https://via.placeholder.com/192x192?text=IV%22,%22sizes%22:%22192x192%22,%22type%22:%22image/png%22}]}">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.25s ease, border-color 0.2s ease, color 0.2s ease;
+    }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at 20% 30%, #0b0b18, #030308);
+      background-attachment: fixed;
+      transition: background 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
 
-<style>
+    /* wallpaper dynamic class */
+    body.wallpaper-anime { background: radial-gradient(ellipse at top, #1a0f2e, #03010a), url('https://grainy-gradients.vercel.app/api?code=0a0a1f&seed=anime'); background-blend-mode: overlay; background-size: cover; }
+    body.wallpaper-galaxy { background: radial-gradient(circle at 70% 20%, #0f0c29, #24243e, #0a0a2a); }
+    body.wallpaper-gojo { background: linear-gradient(135deg, #0a0618 0%, #1a1a3a 100%), repeating-linear-gradient(45deg, rgba(155,77,255,0.05) 0px, rgba(155,77,255,0.05) 2px, transparent 2px, transparent 8px); }
+    body.wallpaper-purple { background: #0c0a1f radial-gradient(ellipse at 40% 50%, #3a1c6e, #03010c); }
+    body.wallpaper-gradient { background: linear-gradient(125deg, #130e2b, #010104, #1e133c); background-size: 200% 200%; animation: aurora 12s ease infinite; }
+    @keyframes aurora { 0%{background-position:0% 50%} 50%{background-position:100% 50%} 100%{background-position:0% 50%} }
 
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+    /* glassmorphism + base */
+    .glass-panel {
+      backdrop-filter: blur(12px);
+      background: rgba(15, 15, 35, 0.45);
+      border: 1px solid rgba(157, 78, 221, 0.2);
+      border-radius: 2rem;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.2), 0 0 12px rgba(155,77,255,0.1);
+    }
 
-body{
-background:#050816;
-color:white;
-overflow-x:hidden;
-min-height:100vh;
-}
+    .app-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
 
-body::before{
-content:'';
-position:fixed;
-width:500px;
-height:500px;
-background:#9333ea;
-filter:blur(180px);
-top:-200px;
-left:-150px;
-opacity:.25;
-z-index:-1;
-}
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      backdrop-filter: blur(16px);
+      background: rgba(5, 5, 20, 0.6);
+      border-right: 1px solid rgba(155, 77, 255, 0.25);
+      padding: 2rem 1.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      transition: all 0.3s;
+    }
 
-body::after{
-content:'';
-position:fixed;
-width:500px;
-height:500px;
-background:#2563eb;
-filter:blur(180px);
-bottom:-200px;
-right:-150px;
-opacity:.20;
-z-index:-1;
-}
+    .logo-area h1 {
+      font-size: 1.9rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #e0b3ff, #9b4dff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .logo-area p { font-size: 0.7rem; color: #b6a0e0; letter-spacing: 1px; margin-top: 4px; }
 
-.container{
-display:flex;
-min-height:100vh;
-}
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      margin: 6px 0;
+      border-radius: 2rem;
+      cursor: pointer;
+      font-weight: 500;
+      color: #ddd9ff;
+      transition: all 0.2s;
+      background: transparent;
+    }
+    .nav-item i { width: 24px; font-size: 1.3rem; }
+    .nav-item.active {
+      background: rgba(155, 77, 255, 0.25);
+      color: white;
+      box-shadow: 0 0 8px rgba(155,77,255,0.4);
+      border: 0.5px solid rgba(255,255,255,0.2);
+    }
+    .nav-item:hover:not(.active) {
+      background: rgba(155,77,255,0.15);
+      transform: translateX(6px);
+    }
 
-.sidebar{
-width:280px;
-padding:25px;
-background:rgba(255,255,255,0.04);
-backdrop-filter:blur(20px);
-border-right:1px solid rgba(255,255,255,0.08);
-}
+    .theme-toggle, .wallpaper-selector {
+      margin-top: auto;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      background: rgba(0,0,0,0.3);
+      padding: 12px;
+      border-radius: 2rem;
+    }
+    .icon-btn {
+      background: rgba(255,255,255,0.08);
+      border: none;
+      border-radius: 2rem;
+      padding: 8px 12px;
+      color: white;
+      cursor: pointer;
+      font-size: 0.8rem;
+      backdrop-filter: blur(4px);
+    }
+    .icon-btn:hover { background: #9b4dff; transform: scale(0.96); }
 
-.logo{
-display:flex;
-align-items:center;
-gap:15px;
-margin-bottom:40px;
-}
+    /* MAIN */
+    .main-content {
+      flex: 1;
+      padding: 1.8rem 2rem;
+      overflow-y: auto;
+    }
+    .top-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .search-box {
+      background: rgba(20,20,45,0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 3rem;
+      padding: 0.6rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(155,77,255,0.4);
+    }
+    .search-box input {
+      background: transparent;
+      border: none;
+      color: white;
+      outline: none;
+      width: 220px;
+    }
+    /* cards grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1rem;
+    }
+    .vault-card {
+      background: rgba(12,12,30,0.65);
+      backdrop-filter: blur(12px);
+      border-radius: 1.8rem;
+      padding: 1.2rem;
+      border: 1px solid rgba(156, 96, 255, 0.3);
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+    .vault-card:hover { transform: translateY(-6px); border-color: #b77eff; box-shadow: 0 12px 28px #9b4dff30; }
+    .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .platform-icon { font-size: 2rem; }
+    .platform-name { font-weight: 600; letter-spacing: 0.5px; }
+    .link-url { font-size: 0.75rem; color: #bcb0e6; word-break: break-all; margin: 8px 0; }
+    .card-buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .btn-smooth {
+      background: rgba(30,30,60,0.8);
+      border: none;
+      border-radius: 2rem;
+      padding: 6px 12px;
+      color: white;
+      font-size: 0.7rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: 0.1s linear;
+    }
+    .btn-smooth:hover { background: #6c3bd0; transform: scale(0.96); box-shadow: 0 0 8px #9b4dff; }
+    .fav-active { color: gold; text-shadow: 0 0 4px orange; }
 
-.logo-box{
-width:55px;
-height:55px;
-border-radius:18px;
-background:linear-gradient(135deg,#9333ea,#3b82f6);
-}
+    /* empty state */
+    .empty-state { text-align: center; padding: 3rem; color: #a999ff; }
+    .toast-notif {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      background: #1e1a3aee;
+      backdrop-filter: blur(16px);
+      padding: 12px 24px;
+      border-radius: 40px;
+      color: white;
+      font-size: 0.9rem;
+      z-index: 9999;
+      border-left: 4px solid #9b4dff;
+      box-shadow: 0 10px 25px -5px black;
+      animation: fadeSlide 0.3s ease;
+    }
+    @keyframes fadeSlide { from{ opacity:0; transform: translateX(40px);} to{ opacity:1; transform: translateX(0);} }
 
-.logo h1{
-font-size:30px;
-font-weight:700;
-}
+    /* Tools section */
+    .tools-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .tool-card {
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(12px);
+      border-radius: 1.6rem;
+      padding: 1.4rem;
+      width: 220px;
+      text-align: center;
+      border: 1px solid #9b4dff55;
+      transition: all 0.2s;
+    }
+    .tool-card:hover { transform: scale(1.02); box-shadow: 0 0 20px #9b4dff; }
 
-.logo p{
-color:rgba(255,255,255,.6);
-font-size:13px;
-}
-
-.menu{
-display:flex;
-flex-direction:column;
-gap:14px;
-}
-
-.menu button{
-padding:16px;
-border:none;
-border-radius:18px;
-background:rgba(255,255,255,0.05);
-color:white;
-cursor:pointer;
-font-size:15px;
-transition:.3s;
-text-align:left;
-}
-
-.menu button:hover{
-transform:translateX(5px);
-background:rgba(255,255,255,0.1);
-}
-
-.main{
-flex:1;
-padding:30px;
-}
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:20px;
-flex-wrap:wrap;
-margin-bottom:35px;
-}
-
-.header h2{
-font-size:45px;
-margin-bottom:10px;
-}
-
-.header p{
-color:rgba(255,255,255,.6);
-}
-
-.input-area{
-display:flex;
-gap:12px;
-flex-wrap:wrap;
-}
-
-.input-area input{
-width:350px;
-padding:16px;
-border:none;
-outline:none;
-border-radius:18px;
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-color:white;
-font-size:15px;
-}
-
-.input-area button{
-padding:16px 24px;
-border:none;
-border-radius:18px;
-background:linear-gradient(135deg,#9333ea,#2563eb);
-color:white;
-font-weight:600;
-cursor:pointer;
-transition:.3s;
-}
-
-.input-area button:hover{
-transform:scale(1.05);
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-gap:22px;
-}
-
-.card{
-background:rgba(255,255,255,0.05);
-border:1px solid rgba(255,255,255,0.08);
-border-radius:28px;
-padding:22px;
-backdrop-filter:blur(20px);
-transition:.4s;
-}
-
-.card:hover{
-transform:translateY(-5px);
-border-color:rgba(168,85,247,.5);
-}
-
-.card-top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
-}
-
-.icon{
-width:55px;
-height:55px;
-border-radius:18px;
-background:rgba(255,255,255,0.08);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:24px;
-}
-
-.favorite{
-background:none;
-border:none;
-font-size:22px;
-cursor:pointer;
-color:gold;
-}
-
-.platform{
-font-size:25px;
-font-weight:600;
-margin-bottom:8px;
-}
-
-.link{
-font-size:13px;
-color:rgba(255,255,255,.6);
-word-break:break-all;
-margin-bottom:20px;
-}
-
-.actions{
-display:flex;
-gap:10px;
-flex-wrap:wrap;
-}
-
-.actions button{
-flex:1;
-padding:12px;
-border:none;
-border-radius:14px;
-cursor:pointer;
-color:white;
-transition:.3s;
-min-width:100px;
-}
-
-.open-btn{
-background:rgba(255,255,255,0.08);
-}
-
-.download-btn{
-background:linear-gradient(135deg,#9333ea,#2563eb);
-}
-
-.copy-btn{
-background:rgba(255,255,255,0.08);
-}
-
-.delete-btn{
-background:rgba(239,68,68,.2);
-}
-
-.actions button:hover{
-transform:scale(1.03);
-}
-
-.empty{
-padding:60px;
-text-align:center;
-border-radius:28px;
-background:rgba(255,255,255,0.04);
-border:1px dashed rgba(255,255,255,0.08);
-color:rgba(255,255,255,.5);
-}
-
-.hidden{
-display:none;
-}
-
-@media(max-width:900px){
-
-.container{
-flex-direction:column;
-}
-
-.sidebar{
-width:100%;
-}
-
-.header h2{
-font-size:35px;
-}
-
-.input-area input{
-width:100%;
-}
-
-}
-
-</style>
+    /* responsive */
+    @media (max-width: 720px) {
+      .sidebar { width: 80px; padding: 1rem 0.5rem; align-items: center; }
+      .sidebar .logo-area p, .sidebar .nav-item span:not(.nav-icon), .theme-toggle .icon-btn span { display: none; }
+      .nav-item i { margin: 0; }
+      .main-content { padding: 1rem; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+    .light-theme {
+      background: #f4f1ff radial-gradient(circle at 10% 20%, #f0eaff, #ffffff);
+    }
+    .light-theme .glass-panel, .light-theme .sidebar, .light-theme .vault-card, .light-theme .search-box, .light-theme .tool-card {
+      background: rgba(245, 240, 255, 0.6);
+      backdrop-filter: blur(16px);
+      color: #1f1b3a;
+      border-color: #c4b2ff;
+    }
+    .light-theme .nav-item { color: #2b2350; }
+    .light-theme .nav-item.active { background: #b89aff; color: black; }
+    .light-theme .btn-smooth { background: #e0d6ff; color: #1b0f3a; }
+  </style>
 </head>
-
-<body>
-
-<div class="container">
-
-<div class="sidebar">
-
-<div class="logo">
-<div class="logo-box"></div>
-
-<div>
-<h1>Infinite Void</h1>
-<p>Hollow Purple Dashboard</p>
-</div>
-</div>
-
-<div class="menu">
-
-<button onclick="showSection('vault')">🌌 Social Vault</button>
-
-<button onclick="showSection('tools')">🧠 Infinite Tools</button>
-
-<button onclick="showFavorites()">⭐ Favorites</button>
-
-<button onclick="changeWallpaper()">🎨 Wallpapers</button>
-
-<button onclick="toggleTheme()">⚙ Toggle Theme</button>
-
-</div>
-
-</div>
-
-<div class="main">
-
-<div class="header">
-
-<div>
-<h2 id="sectionTitle">Social Media Vault</h2>
-<p id="sectionDesc">Save, organize, open and download instantly.</p>
-</div>
-
-<div class="input-area">
-
-<input type="text" id="linkInput" placeholder="Paste social media link...">
-
-<button onclick="addLink()">
-Add Link
-</button>
-
-</div>
-
-</div>
-
-<div class="cards" id="cards"></div>
-
-</div>
-
+<body class="dark-theme wallpaper-purple">
+<div class="app-wrapper">
+  <!-- LEFT SIDEBAR -->
+  <div class="sidebar glass-panel">
+    <div class="logo-area">
+      <h1>♾️ INFINITE<br>VOID</h1>
+      <p>Hollow Purple · Domain Expansion</p>
+    </div>
+    <div class="nav-menu">
+      <div class="nav-item active" data-tab="vault"><i class="fas fa-database"></i><span> Social Vault</span></div>
+      <div class="nav-item" data-tab="favorites"><i class="fas fa-heart"></i><span> Favorites</span></div>
+      <div class="nav-item" data-tab="tools"><i class="fas fa-toolbox"></i><span> ∞ Tools</span></div>
+    </div>
+    <div style="margin-top: auto; display: flex; flex-direction: column; gap: 12px;">
+      <div class="theme-toggle">
+        <button id="darkLightToggle" class="icon-btn"><i class="fas fa-moon"></i> <span>Dark/Light</span></button>
+      </div>
+      <div class="wallpaper-selector">
+        <button data-wall="purple" class="icon-btn"><i class="fas fa-circle"></i> Purple</button>
+        <button data-wall="galaxy" class="icon-btn"><i class="fas fa-star"></i> Galaxy</button>
+        <button data-wall="gojo" class="icon-btn"><i class="fas fa-eye"></i> Gojo</button>
+        <button data-wall="gradient" class="icon-btn"><i class="fas fa-water"></i> Animate</button>
+      </div>
+    </div>
+  </div>
+  <!-- MAIN CONTENT -->
+  <div class="main-content">
+    <div class="top-header">
+      <div style="display: flex; gap: 1rem; align-items: center;">
+        <h2 style="font-weight: 500; background: linear-gradient(135deg,#cdb4ff,#9a4eff); -webkit-background-clip:text; background-clip:text; color:transparent;" id="sectionTitle">Social Vault</h2>
+      </div>
+      <div class="search-box">
+        <i class="fas fa-search"></i>
+        <input type="text" id="searchInput" placeholder="Search by link or platform...">
+      </div>
+      <div>
+        <button id="addLinkBtn" class="icon-btn" style="background:#9b4dff;"><i class="fas fa-plus"></i> New Link</button>
+      </div>
+    </div>
+    <div id="dynamicContent"></div>
+  </div>
 </div>
 
 <script>
-
-let links = JSON.parse(localStorage.getItem('infiniteVoidLinks')) || [];
-
-const cards = document.getElementById('cards');
-
-const wallpapers = [
-'#050816',
-'#12051f',
-'#06111f',
-'#111827',
-'#1e1b4b'
-];
-
-let wallpaperIndex = 0;
-
-const downloaders = {
-
-tiktok:'https://savetik.co/en2',
-
-instagram:'https://fastdl.app/en2#google_vignette',
-
-youtube:'https://y2mate.nu',
-
-facebook:'https://fdown.net/',
-
-pinterest:'https://klickpin.com/',
-
-twitter:'https://ssstwitter.com/',
-
-x:'https://ssstwitter.com/',
-
-capcut:'https://anydownloader.com/en/'
-
-};
-
-function detectPlatform(url){
-
-url = url.toLowerCase();
-
-if(url.includes('tiktok')) return ['TikTok','🎵'];
-
-if(url.includes('instagram')) return ['Instagram','📸'];
-
-if(url.includes('youtube') || url.includes('youtu.be')) return ['YouTube','▶'];
-
-if(url.includes('facebook')) return ['Facebook','📘'];
-
-if(url.includes('pinterest')) return ['Pinterest','📌'];
-
-if(url.includes('twitter') || url.includes('x.com')) return ['Twitter/X','✖'];
-
-if(url.includes('capcut')) return ['CapCut','🎬'];
-
-return ['Unknown','🌌'];
-
-}
-
-function saveLinks(){
-
-localStorage.setItem('infiniteVoidLinks',JSON.stringify(links));
-
-}
-
-function renderLinks(list = links){
-
-cards.innerHTML='';
-
-if(list.length===0){
-
-cards.innerHTML=`
-<div class="empty">
-No links added yet.
-</div>
-`;
-
-return;
-
-}
-
-list.forEach((item,index)=>{
-
-cards.innerHTML += `
-
-<div class="card">
-
-<div class="card-top">
-
-<div class="icon">${item.icon}</div>
-
-<button class="favorite" onclick="toggleFavorite(${item.id})">
-${item.favorite ? '⭐' : '☆'}
-</button>
-
-</div>
-
-<div class="platform">${item.platform}</div>
-
-<div class="link">${item.url}</div>
-
-<div class="actions">
-
-<button class="open-btn" onclick="window.open('${item.url}','_blank')">
-Open
-</button>
-
-<button class="download-btn" onclick="openDownloader('${item.platform}','${item.url}')">
-Download
-</button>
-
-<button class="copy-btn" onclick="copyLink('${item.url}')">
-Copy
-</button>
-
-<button class="delete-btn" onclick="deleteLink(${item.id})">
-Delete
-</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-}
-
-function addLink(){
-
-const input = document.getElementById('linkInput');
-
-const url = input.value.trim();
-
-if(!url){
-
-alert('Paste a link first.');
-
-return;
-
-}
-
-const data = detectPlatform(url);
-
-links.unshift({
-
-id:Date.now(),
-
-platform:data[0],
-
-icon:data[1],
-
-url:url,
-
-favorite:false
-
-});
-
-saveLinks();
-
-renderLinks();
-
-input.value='';
-
-}
-
-function deleteLink(id){
-
-links = links.filter(link => link.id !== id);
-
-saveLinks();
-
-renderLinks();
-
-}
-
-function toggleFavorite(id){
-
-links = links.map(link => {
-
-if(link.id === id){
-
-return {
-
-...link,
-
-favorite:!link.favorite
-
-};
-
-}
-
-return link;
-
-});
-
-saveLinks();
-
-renderLinks();
-
-}
-
-function showFavorites(){
-
-const favorites = links.filter(link => link.favorite);
-
-document.getElementById('sectionTitle').innerText = 'Favorites';
-
-document.getElementById('sectionDesc').innerText = 'Your favorite saved links.';
-
-renderLinks(favorites);
-
-}
-
-function showSection(type){
-
-if(type === 'vault'){
-
-document.getElementById('sectionTitle').innerText = 'Social Media Vault';
-
-document.getElementById('sectionDesc').innerText = 'Save, organize, open and download instantly.';
-
-renderLinks();
-
-}
-
-if(type === 'tools'){
-
-cards.innerHTML = `
-
-<div class="card">
-<div class="platform">TikTok Downloader</div>
-
-<div class="actions">
-<button class="download-btn" onclick="window.open('https://savetik.co/en2','_blank')">
-Open Tool
-</button>
-</div>
-</div>
-
-<div class="card">
-<div class="platform">Instagram Downloader</div>
-
-<div class="actions">
-<button class="download-btn" onclick="window.open('https://fastdl.app/en2#google_vignette','_blank')">
-Open Tool
-</button>
-</div>
-</div>
-
-<div class="card">
-<div class="platform">YouTube Downloader</div>
-
-<div class="actions">
-<button class="download-btn" onclick="window.open('https://y2mate.nu','_blank')">
-Open Tool
-</button>
-</div>
-</div>
-
-`;
-
-document.getElementById('sectionTitle').innerText = 'Infinite Tools';
-
-document.getElementById('sectionDesc').innerText = 'Quick access downloader tools.';
-
-}
-
-}
-
-function openDownloader(platform,url){
-
-platform = platform.toLowerCase();
-
-navigator.clipboard.writeText(url);
-
-if(platform.includes('twitter')){
-
-window.open(downloaders.twitter,'_blank');
-
-alert('Link copied. Paste it in downloader.');
-
-return;
-
-}
-
-const key = platform.split('/')[0].toLowerCase();
-
-if(downloaders[key]){
-
-window.open(downloaders[key],'_blank');
-
-alert('Link copied. Paste it in downloader.');
-
-}
-
-}
-
-function copyLink(url){
-
-navigator.clipboard.writeText(url);
-
-alert('Link copied.');
-
-}
-
-function toggleTheme(){
-
-document.body.classList.toggle('light');
-
-if(document.body.classList.contains('light')){
-
-document.body.style.background = '#f4f4f4';
-
-document.body.style.color = '#111';
-
-}else{
-
-document.body.style.background = '#050816';
-
-document.body.style.color = 'white';
-
-}
-
-}
-
-function changeWallpaper(){
-
-wallpaperIndex++;
-
-if(wallpaperIndex >= wallpapers.length){
-
-wallpaperIndex = 0;
-
-}
-
-document.body.style.background = wallpapers[wallpaperIndex];
-
-}
-
-renderLinks();
-
-</script>
-
-</body>
-</html>
+  // ---------- STORAGE KEYS ----------
+  let vaultLinks = [];      // { id, url, platform, platformName, favorite, date }
+  let currentTab = "vault";
+  let searchQuery = "";
+
+  // platform detection + icon
+  function detectPlatform(url) {
+    const u = url.toLowerCase();
+    if (u.includes('tiktok.com')) return { platform: 'tiktok', name: 'TikTok', icon: 'fab fa-tiktok' };
+    if (u.includes('instagram.com')) return { platform: 'instagram', name: 'Instagram', icon: 'fab fa-instagram' };
+    if (u.includes('youtube.com') || u.includes('youtu.be')) return { platform: 'youtube', name: 'YouTube', icon: 'fab fa-youtube' };
+    if (u.includes('facebook.com') || u.includes('fb.com')) return { platform: 'facebook', name: 'Facebook', icon: 'fab fa-facebook' };
+    if (u.includes('twitter.com') || u.includes('x.com')) return { platform: 'twitter', name: 'Twitter/X', icon: 'fab fa-twitter' };
+    if (u.includes('pinterest.com')) return { platform: 'pinterest', name: 'Pinterest', icon: 'fab fa-pinterest' };
+    if (u.includes('capcut.com') || u.includes('capcut')) return { platform: 'capcut', name: 'CapCut', icon: 'fas fa-scissors' };
+    return { platform: 'other', name: 'Social Link', icon: 'fas fa-link' };
+  }
+
+  function loadFromStorage() {
+    const stored = localStorage.getItem('infiniteVaultLinks');
+    if(stored) vaultLinks = JSON.parse(stored);
+    else vaultLinks = [];
+  }
+  function saveToStorage() { localStorage.setItem('infiniteVaultLinks', JSON.stringify(vaultLinks)); }
+
+  function addNewLinkFromPrompt() {
+    let link = prompt("Paste video / post link:");
+    if(!link) return;
+    link = link.trim();
+    if(!link.startsWith('http')) link = 'https://' + link;
+    const detected = detectPlatform(link);
+    const newItem = {
+      id: Date.now(),
+      url: link,
+      platform: detected.platform,
+      platformName: detected.name,
+      platformIcon: detected.icon,
+      favorite: false,
+      createdAt: new Date().toISOString()
+    };
+    vaultLinks.unshift(newItem);
+    saveToStorage();
+    showToast(`✨ ${detected.name} link saved to vault`);
+    renderCurrentView();
+  }
+
+  function deleteLink(id) {
+    vaultLinks = vaultLinks.filter(l => l.id !== id);
+    saveToStorage();
+    showToast("🗑️ Link removed");
+    renderCurrentView();
+  }
+  function toggleFavorite(id) {
+    const link = vaultLinks.find(l => l.id === id);
+    if(link) { link.favorite = !link.favorite; saveToStorage(); showToast(link.favorite ? "❤️ Added to favorites" : "💔 Removed from favorites"); renderCurrentView(); }
+  }
+  function copyLinkToClip(url) {
+    navigator.clipboard.writeText(url);
+    showToast("📋 Link copied to clipboard");
+  }
+  function openVideo(url) { window.open(url, '_blank'); }
+  function downloadHandler(platform, videoUrl) {
+    let downloaderUrl = "";
+    switch(platform) {
+      case 'tiktok': downloaderUrl = "https://savetik.co/en2"; break;
+      case 'instagram': downloaderUrl = "https://fastdl.app/en2"; break;
+      case 'youtube': downloaderUrl = "https://y2mate.nu"; break;
+      case 'twitter': downloaderUrl = "https://ssstwitter.com/"; break;
+      case 'facebook': downloaderUrl = "https://fdown.net/"; break;
+      case 'pinterest': downloaderUrl = "https://klickpin.com/"; break;
+      case 'capcut': downloaderUrl = "https://anydownloader.com/en/"; break;
+      default: downloaderUrl = "https://google.com";
+    }
+    navigator.clipboard.writeText(videoUrl);
+    window.open(downloaderUrl, '_blank');
+    showToast(`🔗 Link copied. Paste in ${new URL(downloaderUrl).hostname}`);
+  }
+
+  // render vault or favorites
+  function renderVaultOrFav(filterFavOnly = false) {
+    let filtered = [...vaultLinks];
+    if(filterFavOnly) filtered = filtered.filter(l => l.favorite === true);
+    if(searchQuery.trim() !== "") {
+      const q = searchQuery.toLowerCase();
+      filtered = filtered.filter(l => l.url.toLowerCase().includes(q) || l.platformName.toLowerCase().includes(q));
+    }
+    if(filtered.length === 0) {
+      return `<div class="empty-state"><i class="fas fa-void" style="font-size: 3rem;"></i><p>No links found. Add your first social link.</p></div>`;
+    }
+    return `<div class="cards-grid">` + filtered.map(link => `
+      <div class="vault-card">
+        <div class="card-header">
+          <i class="${link.platformIcon}" style="font-size: 2rem; color:#ba9aff;"></i>
+          <span class="platform-name"><strong>${link.platformName}</strong></span>
+          <div style="margin-left:auto;"><i class="fas ${link.favorite ? 'fa-heart fav-active' : 'fa-heart'}" style="cursor:pointer;" onclick="window.toggleFavorite(${link.id})"></i></div>
+        </div>
+        <div class="link-url">${link.url.length > 50 ? link.url.substring(0,50)+'...' : link.url}</div>
+        <div class="card-buttons">
+          <button class="btn-smooth" onclick="window.openVideo('${link.url.replace(/'/g, "\\'")}')"><i class="fas fa-play"></i> Open</button>
+          <button class="btn-smooth" onclick="window.downloadHandler('${link.platform}','${link.url.replace(/'/g, "\\'")}')"><i class="fas fa-download"></i> Download</button>
+          <button class="btn-smooth" onclick="window.copyLinkToClip('${link.url.replace(/'/g, "\\'")}')"><i class="fas fa-copy"></i> Copy</button>
+          <button class="btn-smooth" onclick="window.deleteLink(${link.id})"><i class="fas fa-trash"></i> Del</button>
+        </div>
+      </div>
+    `).join('') + `</div>`;
+  }
+
+  function renderTools() {
+    const toolsList = [
+      { name: "TikTok Downloader", icon: "fab fa-tiktok", url: "https://savetik.co/en2" },
+      { name: "Instagram Downloader", icon: "fab fa-instagram", url: "https://fastdl.app/en2" },
+      { name: "YouTube Downloader", icon: "fab fa-youtube", url: "https://y2mate.nu" },
+      { name: "Watermark Remover", icon: "fas fa-water", url: "https://ezremove.ai/video-watermark-remover/" },
+      { name: "Pinterest Downloader", icon: "fab fa-pinterest", url: "https://klickpin.com/" },
+      { name: "CapCut Downloader", icon: "fas fa-scissors", url: "https://anydownloader.com/en/" }
+    ];
+    return `<h3 style="margin-bottom: 1rem;"><i class="fas fa-infinity"></i> Infinite Tools — instant access</h3><div class="tools-grid">` + toolsList.map(tool => `
+      <div class="tool-card">
+        <i class="${tool.icon}" style="font-size: 2.2rem; color:#b77eff;"></i>
+        <h4>${tool.name}</h4>
+        <button class="btn-smooth" style="margin-top: 12px;" onclick="window.open('${tool.url}','_blank')"><i class="fas fa-external-link-alt"></i> Open Tool</button>
+      </div>
+    `).join('') + `</div>`;
+  }
+
+  function renderCurrentView() {
+    const contentDiv = document.getElementById('dynamicContent');
+    const titleEl = document.getElementById('sectionTitle');
+    if(currentTab === 'vault') {
+      titleEl.innerText = '✦ Social Media Vault ✦';
+      contentDiv.innerHTML = renderVaultOrFav(false);
+    } else if(currentTab === 'favorites') {
+      titleEl.innerText = '❤️ Favorite Links';
+      contentDiv.innerHTML = renderVaultOrFav(true);
+    } else if(currentTab === 'tools') {
+      titleEl.innerText = '∞ INFINITE TOOLS ∞';
+      contentDiv.innerHTML = renderTools();
+    }
+  }
+
+  // global UI helpers
+  window.deleteLink = deleteLink;
+  window.toggleFavorite = toggleFavorite;
+  window.copyLinkToClip = copyLinkToClip;
+  window.openVideo = openVideo;
+  window.downloadHandler = downloadHandler;
+
+  function showToast(msg) {
+    const existing = document.querySelector('.toast-notif');
+    if(existing) existing.remove();
+    const toast = document.createElement('div');
+    toast.className = 'toast-notif';
+    toast.innerHTML = `<i class="fas fa-sparkle" style="margin-right: 8px;"></i> ${msg}`;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2400);
+  }
+
+  // Theme & wallpaper
+  function setTheme(theme) {
+    if(theme === 'light') {
+      document.body.classList.add('light-theme');
+      document.body.classList.remove('dark-theme');
+    } else {
+      document.body.classList.remove('light-theme');
+      document.body.classList.add('dark-theme');
+    }
+    localStorage.setItem('iv_theme', theme);
+  }
+  function setWallpaper(type) {
+    const body = document.body;
+    body.classList.remove('wallpaper-anime','wallpaper-galaxy','wallpaper-gojo','wallpaper-purple','wallpaper-gradient');
+    if(type === 'galaxy') body.classList.add('wallpaper-galaxy');
+    else if(type === 'gojo') body.classList.add('wallpaper-gojo');
+    else if(type === 'purple') body.classList.add('wallpaper-purple');
+    else if(type === 'gradient') body.classList.add('wallpaper-gradient');
+    else body.classList.add('wallpaper-purple');
+    localStorage.setItem('iv_wallpaper', type);
+  }
+
+  // event listeners & PWA install
+  function initUI() {
+    loadFromStorage();
+    const savedTheme = localStorage.getItem('iv_theme') || 'dark';
+    setTheme(savedTheme);
+    const savedWall = localStorage.getItem('iv_wallpaper') || 'purple';
+    setWallpaper(savedWall);
+
+    document.getElementById('darkLightToggle').addEventListener('click', () => {
+      const isLight = document.body.classList.contains('light-theme');
+      setTheme(isLight ? 'dark' : 'light');
+      showToast(`☯️ ${isLight ? 'Dark' : 'Light'} mode activated`);
+    });
+    document.querySelectorAll('[
