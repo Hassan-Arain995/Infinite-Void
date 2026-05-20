@@ -1,183 +1,487 @@
-export default function InfiniteVoidPreview() { return ( <div className="min-h-screen bg-gradient-to-br from-[#07070d] via-[#120b1f] to-[#050509] text-white overflow-hidden relative"> <div className="absolute inset-0 opacity-30 blur-3xl"> <div className="absolute top-[-120px] left-[10%] w-[420px] h-[420px] rounded-full bg-purple-700"></div> <div className="absolute bottom-[-120px] right-[10%] w-[420px] h-[420px] rounded-full bg-blue-700"></div> </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Infinite Void</title>
 
-<div className="relative z-10 flex h-screen">
-    <aside className="w-[290px] backdrop-blur-2xl bg-white/5 border-r border-white/10 p-6 flex flex-col justify-between">
-      <div>
-        <div className="flex items-center gap-3 mb-10">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 shadow-2xl"></div>
-          <div>
-            <h1 className="text-2xl font-bold tracking-wide">Infinite Void</h1>
-            <p className="text-sm text-white/60">Hollow Purple Dashboard</p>
-          </div>
-        </div>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
-        <div className="space-y-3">
-          <button className="w-full text-left px-4 py-3 rounded-2xl bg-gradient-to-r from-purple-600/40 to-blue-500/20 border border-purple-400/20 hover:scale-[1.02] transition-all duration-300 shadow-xl">
-            🌌 Social Vault
-          </button>
+<style>
 
-          <button className="w-full text-left px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10">
-            🧠 Infinite Tools
-          </button>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
 
-          <button className="w-full text-left px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10">
-            ⭐ Favorites
-          </button>
+body{
+background:#07070d;
+color:white;
+overflow-x:hidden;
+min-height:100vh;
+}
 
-          <button className="w-full text-left px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10">
-            🎨 Wallpapers
-          </button>
+body::before{
+content:'';
+position:fixed;
+width:500px;
+height:500px;
+background:purple;
+filter:blur(180px);
+top:-200px;
+left:-100px;
+opacity:.25;
+z-index:-1;
+}
 
-          <button className="w-full text-left px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 transition-all duration-300 border border-white/10">
-            ⚙ Settings
-          </button>
-        </div>
-      </div>
+body::after{
+content:'';
+position:fixed;
+width:500px;
+height:500px;
+background:#3b82f6;
+filter:blur(180px);
+bottom:-200px;
+right:-100px;
+opacity:.20;
+z-index:-1;
+}
 
-      <div className="bg-white/5 border border-white/10 rounded-3xl p-4 backdrop-blur-xl">
-        <p className="text-sm text-white/60 mb-2">Theme</p>
-        <div className="flex gap-3">
-          <button className="flex-1 py-2 rounded-xl bg-purple-500/30 border border-purple-400/20 hover:bg-purple-500/40 transition-all">
-            🌙 Dark
-          </button>
-          <button className="flex-1 py-2 rounded-xl bg-white/10 hover:bg-white/20 transition-all">
-            ☀ Light
-          </button>
-        </div>
-      </div>
-    </aside>
+.container{
+display:flex;
+min-height:100vh;
+}
 
-    <main className="flex-1 p-8 overflow-auto">
-      <div className="flex items-center justify-between mb-8">
-        <div>
-          <h2 className="text-4xl font-bold mb-2">Social Media Vault</h2>
-          <p className="text-white/60 text-lg">Save, organize, open, and download videos instantly.</p>
-        </div>
+.sidebar{
+width:280px;
+background:rgba(255,255,255,0.05);
+backdrop-filter:blur(20px);
+border-right:1px solid rgba(255,255,255,0.08);
+padding:25px;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+}
 
-        <div className="flex items-center gap-4">
-          <input
-            type="text"
-            placeholder="Paste social media link..."
-            className="w-[420px] px-5 py-4 rounded-2xl bg-white/5 border border-white/10 backdrop-blur-xl outline-none focus:border-purple-400/40 transition-all"
-          />
+.logo{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:40px;
+}
 
-          <button className="px-6 py-4 rounded-2xl bg-gradient-to-r from-purple-600 to-blue-600 hover:scale-105 transition-all duration-300 shadow-2xl font-semibold">
-            Add Link
-          </button>
-        </div>
-      </div>
+.logo-box{
+width:50px;
+height:50px;
+border-radius:18px;
+background:linear-gradient(135deg,#9333ea,#3b82f6);
+}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-        {[
-          {
-            name: 'TikTok Video',
-            icon: '🎵',
-            platform: 'TikTok',
-            color: 'from-pink-500/20 to-purple-500/20'
-          },
-          {
-            name: 'Instagram Reel',
-            icon: '📸',
-            platform: 'Instagram',
-            color: 'from-orange-500/20 to-pink-500/20'
-          },
-          {
-            name: 'YouTube Video',
-            icon: '▶',
-            platform: 'YouTube',
-            color: 'from-red-500/20 to-purple-500/20'
-          },
-          {
-            name: 'Pinterest Post',
-            icon: '📌',
-            platform: 'Pinterest',
-            color: 'from-red-400/20 to-orange-400/20'
-          },
-          {
-            name: 'Facebook Video',
-            icon: '📘',
-            platform: 'Facebook',
-            color: 'from-blue-500/20 to-cyan-500/20'
-          },
-          {
-            name: 'Twitter/X Video',
-            icon: '✖',
-            platform: 'Twitter/X',
-            color: 'from-slate-500/20 to-purple-500/20'
-          }
-        ].map((item, index) => (
-          <div
-            key={index}
-            className={`group rounded-[30px] border border-white/10 bg-gradient-to-br ${item.color} backdrop-blur-2xl p-6 hover:scale-[1.02] hover:border-purple-400/30 transition-all duration-500 shadow-2xl`}
-          >
-            <div className="flex items-center justify-between mb-5">
-              <div className="w-14 h-14 rounded-2xl bg-white/10 flex items-center justify-center text-2xl backdrop-blur-xl border border-white/10">
-                {item.icon}
-              </div>
+.logo h1{
+font-size:28px;
+}
 
-              <button className="opacity-0 group-hover:opacity-100 transition-all duration-300 px-3 py-1 rounded-xl bg-white/10 text-sm">
-                ⭐ Favorite
-              </button>
-            </div>
+.logo p{
+font-size:13px;
+color:rgba(255,255,255,0.6);
+}
 
-            <h3 className="text-2xl font-semibold mb-1">{item.name}</h3>
-            <p className="text-white/50 mb-6">{item.platform}</p>
+.menu{
+display:flex;
+flex-direction:column;
+gap:12px;
+}
 
-            <div className="flex gap-3">
-              <button className="flex-1 py-3 rounded-2xl bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-xl border border-white/10">
-                Open
-              </button>
+.menu button{
+background:rgba(255,255,255,0.05);
+border:none;
+color:white;
+padding:16px;
+border-radius:18px;
+cursor:pointer;
+font-size:15px;
+transition:.3s;
+text-align:left;
+}
 
-              <button className="flex-1 py-3 rounded-2xl bg-gradient-to-r from-purple-600/70 to-blue-600/70 hover:from-purple-500 hover:to-blue-500 transition-all duration-300 shadow-xl">
-                Download
-              </button>
-            </div>
-          </div>
-        ))}
-      </div>
+.menu button:hover{
+transform:translateX(5px);
+background:rgba(255,255,255,0.1);
+}
 
-      <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="rounded-[32px] bg-white/5 border border-white/10 p-6 backdrop-blur-2xl shadow-2xl">
-          <h3 className="text-2xl font-semibold mb-5">Infinite Tools</h3>
+.main{
+flex:1;
+padding:30px;
+}
 
-          <div className="space-y-4">
-            {[
-              'YT Downloader',
-              'TikTok Downloader',
-              'AI Tools',
-              'Anime Websites'
-            ].map((tool, i) => (
-              <div
-                key={i}
-                className="flex items-center justify-between px-5 py-4 rounded-2xl bg-white/5 border border-white/10 hover:bg-white/10 transition-all duration-300"
-              >
-                <span>{tool}</span>
+.top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+gap:20px;
+flex-wrap:wrap;
+margin-bottom:35px;
+}
 
-                <button className="px-4 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 transition-all">
-                  Open
-                </button>
-              </div>
-            ))}
-          </div>
-        </div>
+.top h2{
+font-size:40px;
+margin-bottom:8px;
+}
 
-        <div className="rounded-[32px] bg-white/5 border border-white/10 p-6 backdrop-blur-2xl shadow-2xl">
-          <h3 className="text-2xl font-semibold mb-5">Wallpaper Engine</h3>
+.top p{
+color:rgba(255,255,255,0.6);
+}
 
-          <div className="grid grid-cols-2 gap-4">
-            {['Gojo Purple', 'Void Neon', 'Galaxy Blur', 'Minimal Dark'].map((wall, i) => (
-              <div
-                key={i}
-                className="h-36 rounded-3xl bg-gradient-to-br from-purple-600/30 to-blue-600/20 border border-white/10 hover:scale-[1.02] transition-all duration-300 flex items-end p-4"
-              >
-                <p className="font-medium">{wall}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    </main>
-  </div>
+.input-area{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.input-area input{
+width:350px;
+padding:16px 18px;
+border:none;
+outline:none;
+border-radius:18px;
+background:rgba(255,255,255,0.06);
+color:white;
+font-size:15px;
+border:1px solid rgba(255,255,255,0.08);
+}
+
+.input-area button{
+padding:16px 25px;
+border:none;
+border-radius:18px;
+background:linear-gradient(135deg,#9333ea,#3b82f6);
+color:white;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.input-area button:hover{
+transform:scale(1.05);
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:22px;
+}
+
+.card{
+background:rgba(255,255,255,0.05);
+border:1px solid rgba(255,255,255,0.08);
+padding:22px;
+border-radius:28px;
+backdrop-filter:blur(20px);
+transition:.4s;
+}
+
+.card:hover{
+transform:translateY(-6px);
+border-color:rgba(168,85,247,.5);
+}
+
+.card-top{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:18px;
+}
+
+.icon{
+width:55px;
+height:55px;
+border-radius:18px;
+background:rgba(255,255,255,0.08);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+}
+
+.platform{
+font-size:25px;
+font-weight:600;
+margin-bottom:8px;
+}
+
+.link{
+font-size:13px;
+color:rgba(255,255,255,0.6);
+word-break:break-all;
+margin-bottom:20px;
+}
+
+.actions{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+}
+
+.actions button{
+flex:1;
+padding:12px;
+border:none;
+border-radius:14px;
+cursor:pointer;
+transition:.3s;
+color:white;
+}
+
+.open-btn{
+background:rgba(255,255,255,0.08);
+}
+
+.download-btn{
+background:linear-gradient(135deg,#9333ea,#3b82f6);
+}
+
+.delete-btn{
+background:rgba(239,68,68,0.2);
+}
+
+.actions button:hover{
+transform:scale(1.03);
+}
+
+.empty{
+padding:60px;
+text-align:center;
+background:rgba(255,255,255,0.05);
+border-radius:28px;
+color:rgba(255,255,255,0.6);
+border:1px dashed rgba(255,255,255,0.1);
+}
+
+@media(max-width:900px){
+
+.container{
+flex-direction:column;
+}
+
+.sidebar{
+width:100%;
+}
+
+.top h2{
+font-size:32px;
+}
+
+.input-area input{
+width:100%;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="sidebar">
+
+<div>
+
+<div class="logo">
+<div class="logo-box"></div>
+
+<div>
+<h1>Infinite Void</h1>
+<p>Hollow Purple Dashboard</p>
+</div>
 </div>
 
-) }
+<div class="menu">
+<button>🌌 Social Vault</button>
+<button>🧠 Infinite Tools</button>
+<button>⭐ Favorites</button>
+<button>🎨 Wallpapers</button>
+<button>⚙ Settings</button>
+</div>
+
+</div>
+
+</div>
+
+<div class="main">
+
+<div class="top">
+
+<div>
+<h2>Social Media Vault</h2>
+<p>Save, organize, open and download instantly.</p>
+</div>
+
+<div class="input-area">
+<input type="text" id="linkInput" placeholder="Paste social media link...">
+
+<button onclick="addLink()">Add Link</button>
+</div>
+
+</div>
+
+<div class="cards" id="cards">
+
+<div class="empty">
+No links added yet.
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+let links = JSON.parse(localStorage.getItem('infiniteVoidLinks')) || [];
+
+const cards = document.getElementById('cards');
+
+const downloaders = {
+tiktok:'https://savetik.co/en2',
+instagram:'https://fastdl.app/en2#google_vignette',
+youtube:'https://y2mate.nu',
+facebook:'https://fdown.net/',
+pinterest:'https://klickpin.com/',
+twitter:'https://ssstwitter.com/',
+x:'https://ssstwitter.com/',
+capcut:'https://anydownloader.com/en/'
+};
+
+function detectPlatform(url){
+
+url = url.toLowerCase();
+
+if(url.includes('tiktok')) return ['TikTok','🎵'];
+if(url.includes('instagram')) return ['Instagram','📸'];
+if(url.includes('youtube') || url.includes('youtu.be')) return ['YouTube','▶'];
+if(url.includes('facebook')) return ['Facebook','📘'];
+if(url.includes('pinterest')) return ['Pinterest','📌'];
+if(url.includes('twitter') || url.includes('x.com')) return ['Twitter/X','✖'];
+if(url.includes('capcut')) return ['CapCut','🎬'];
+
+return ['Unknown','🌌'];
+
+}
+
+function saveLinks(){
+localStorage.setItem('infiniteVoidLinks',JSON.stringify(links));
+}
+
+function renderLinks(){
+
+cards.innerHTML='';
+
+if(links.length===0){
+
+cards.innerHTML=`
+<div class="empty">
+No links added yet.
+</div>
+`;
+
+return;
+
+}
+
+links.forEach((item,index)=>{
+
+cards.innerHTML += `
+
+<div class="card">
+
+<div class="card-top">
+<div class="icon">${item.icon}</div>
+</div>
+
+<div class="platform">${item.platform}</div>
+
+<div class="link">${item.url}</div>
+
+<div class="actions">
+
+<button class="open-btn" onclick="window.open('${item.url}','_blank')">
+Open
+</button>
+
+<button class="download-btn" onclick="openDownloader('${item.platform}')">
+Download
+</button>
+
+<button class="delete-btn" onclick="deleteLink(${index})">
+Delete
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+function addLink(){
+
+const input = document.getElementById('linkInput');
+
+const url = input.value.trim();
+
+if(!url) return;
+
+const data = detectPlatform(url);
+
+links.unshift({
+platform:data[0],
+icon:data[1],
+url:url
+});
+
+saveLinks();
+renderLinks();
+
+input.value='';
+
+}
+
+function deleteLink(index){
+
+links.splice(index,1);
+
+saveLinks();
+renderLinks();
+
+}
+
+function openDownloader(platform){
+
+platform = platform.toLowerCase();
+
+if(platform.includes('twitter')){
+window.open(downloaders.twitter,'_blank');
+return;
+}
+
+const key = platform.split('/')[0].toLowerCase();
+
+if(downloaders[key]){
+window.open(downloaders[key],'_blank');
+}
+
+}
+
+renderLinks();
+
+</script>
+
+</body>
+</html>
